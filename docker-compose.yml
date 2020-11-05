@@ -7,7 +7,6 @@ services:
   db:
     image: postgres
     environment:
-      - 'POSTGRES_USER=admin'
       - 'POSTGRES_PASSWORD=root'
       - 'POSTGRES_DB=db'
     volumes:
@@ -25,7 +24,7 @@ services:
       - './blockchain.html:/blockchain.html'
       - '/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt'
     environment:
-      - 'IP=localhost'
+      - 'IP=0.0.0.0'
       - 'PORT=8000'
       - 'POSTGRES_URL=db'
       - 'POSTGRES_PASSWORD=root'
