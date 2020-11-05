@@ -1,19 +1,39 @@
 version: '3.6'
 
+networks:
+  n1:
+
 services:
   db:
-    image:postgresql
+    image: postgres
     environment:
-      POSTGRES_URL=
-      POSTGRES_PASSWORD='root'
+      - 'POSTGRES_USER=admin'
+      - 'POSTGRES_PASSWORD=root'
+      - 'POSTGRES_DB=db'
     volumes:
-      - './var/lib/postgresql/data'
+      - './db:/var/lib/postgresql/data'
+    networks:
+      - 'n1'
+    restart: always
+    user: 1000:1000
+
   gochain:
-    image: t????
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        IP:
-        PORT: 8000
-
+    volumes:
+      - './blockchain.html:/blockchain.html'
+      - '/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt'
+    environment:
+      - 'IP=localhost'
+      - 'PORT=8000'
+      - 'POSTGRES_URL=db'
+      - 'POSTGRES_PASSWORD=root'
+    ports:
+      - '8000:8000'
+    depends_on: 
+      - 'db'
+    networks:
+      - 'n1'
+    links:
+      - 'db'
