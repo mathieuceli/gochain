@@ -8,7 +8,6 @@ services:
     image: postgres
     environment:
       - 'POSTGRES_PASSWORD=root'
-      - 'POSTGRES_DB=db'
     volumes:
       - './db:/var/lib/postgresql/data'
     networks:
@@ -22,7 +21,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - './blockchain.html:/blockchain.html'
-      - '/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt'
     environment:
       - 'IP=0.0.0.0'
       - 'PORT=8000'
