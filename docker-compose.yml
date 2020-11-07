@@ -1,8 +1,5 @@
 version: '3.6'
 
-networks:
-  n1:
-
 services:
   db:
     image: postgres
@@ -10,8 +7,6 @@ services:
       - 'POSTGRES_PASSWORD=root'
     volumes:
       - './db:/var/lib/postgresql/data'
-    networks:
-      - 'n1'
     restart: always
     user: 1000:1000
 
@@ -30,7 +25,5 @@ services:
       - '8000:8000'
     depends_on: 
       - 'db'
-    networks:
-      - 'n1'
     links:
       - 'db'
